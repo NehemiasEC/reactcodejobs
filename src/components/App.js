@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './Global/images/logo.svg';
 import './Global/css/App.css';
+import PropTypes from "prop-types";
 
 // components
 import Header from "./Global/Header"
@@ -13,9 +14,12 @@ import item from "../data/menu"
 
 
 class App extends Component {
-
+    static propTypes={
+        children:PropTypes.object.isRequired
+    };
   render() {
     console.log(item);
+    const {children} = this.props;
     return (
       <div className="App">
         <header className="App-header">
@@ -26,7 +30,7 @@ class App extends Component {
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
           <Header items={item} title="Hola Mundo"/>
-          <Content/>
+          <Content body={children}/>
           <Footer/>
 
       </div>
