@@ -28,9 +28,12 @@
     "webpack": "^2.7.0",
     "webpack-dev-middleware": "^2.0.6",
     "webpack-dev-server": "^2.11.2",
-    "webpack-hot-middleware": "^1.2.0"
+    "webpack-hot-middleware": "^1.2.0",
+    "webpack-split-chunks": "^0.2.1"
   },
   "scripts": {
-    "start": "babel-node src/server"
+    "start": "babel-node src/server",
+    "production":"NODE_ENV=production BABEL_ENV=production npm run build && npm start",
+    "build": "NODE_ENV=production webpack --config webpack.config.babel.js"
   }
 }
