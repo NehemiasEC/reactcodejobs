@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import logo from './images/logo.svg';
-import './css/header.css'
-import PropTypes from "prop-types"
+import './css/header.css';
+import PropTypes from "prop-types";
+
+import {Link} from "react-router-dom";
 
 class Header extends Component {
   static propTypes = {
@@ -17,7 +19,7 @@ class Header extends Component {
       <div className="Header">
         <h1>header</h1>
         <ul className="Menu">
-            {items.map((item,key)=><li key={key}>{item.title}</li>)}
+            {items.map((item,key)=><li key={key}><Link to={item.url}>{item.title}</Link></li>)}
         </ul>
       </div>
     );
