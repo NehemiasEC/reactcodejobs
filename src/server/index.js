@@ -4,9 +4,19 @@ import path from "path";
 import webpackDevMiddleware from "webpack-dev-middleware";
 import webpackHotMiddleware from "webpack-hot-middleware";
 import open from "open";
+import exphbs  from "express-handlebars";
 
 //webpack Configuration
 
+
+
+// helpers
+
+import * as hbsHelper from "../lib/handlebars";
+
+//utils
+
+import {isMobile} from "../lib/utils/device";
 
 import webpackConfig from "../../webpack.config.babel";
 
@@ -31,6 +41,19 @@ const app = express();
 
 app.use(express.static(path.join(__dirname,'../public')));
 
+//handlebars setup
+app.engine('.hbs',exphbs({
+    extname:'.hbs',
+    helpers:hbsHelper
+}));
+
+
+//view engine
+
+app.set('views',path.join(__dirname,'./views'));
+app.set('view engine','.hbs');
+
+
 //webpack compiler
 
 const webpackCompiler = webpack(webpackConfig);
@@ -42,6 +65,14 @@ if (isDevelopment){
     app.use(webpackDevMiddleware(webpackCompiler));
     app.use(webpackHotMiddleware(webpackCompiler));
 }
+//Device detector
+
+app.use((req, res, next)=>{
+    console.log(req.headers['user-agent']);
+    res.locals.isMobile=isMobile(req.headers['user-agent']);
+    return next();
+});
+
 
 // API Dispatches
 app.use("/api/blog",blogApi);
@@ -50,7 +81,9 @@ app.use("/api/blog",blogApi);
 //sending all traffic to react
 
 app.get('*',(req, res)=>{
-    res.sendFile(path.join(__dirname,"../public/index.html"));
+    res.render('frontend/index',{
+        layout:false
+    })
 });
 
 

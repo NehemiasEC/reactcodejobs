@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "babel-polyfill": "^6.26.0",
+    "express-handlebars": "^3.0.0",
+    "html-minifier": "^3.5.10",
     "path": "^0.12.7",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
@@ -33,7 +35,7 @@
   },
   "scripts": {
     "start": "babel-node src/server",
-    "production":"NODE_ENV=production BABEL_ENV=production npm run build && npm start",
+    "production": "NODE_ENV=production BABEL_ENV=production npm run build && npm start",
     "build": "NODE_ENV=production webpack --config webpack.config.babel.js"
   }
 }
